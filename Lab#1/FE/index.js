@@ -31,22 +31,49 @@ function fetchEmployees() {
 
 // TODO
 // add event listener to submit button
+document.getElementById('employeeForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  createEmployee();
+});
+
 
 // TODO
 // add event listener to delete button
+document.getElementById('dataTable').addEventListener('click', function(event) {
+  if (event.target.textContent === 'Delete') {
+    deleteEmployee(id);
+  }
+});
 
 // TODO
 function createEmployee (){
   // get data from input field
+  const name = document.getElementById('name').value;
+  const id = document.getElementById('id').value;
   // send data to BE
+  fetch('http://localhost:3000/api/v1/employee', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id, name })
+  })
   // call fetchEmployees
+  .then(() => fetchEmployees())
+  .catch(error => console.error(error))
 }
 
 // TODO
-function deleteEmployee (){
+function deleteEmployee (id){
   // get id
+  
   // send id to BE
+  fetch(`http://localhost:3000/api/v1/employee/${id}`, {
+    method: 'DELETE'
+  })
   // call fetchEmployees
+  .then(() => fetchEmployees())
+  .catch(error => console.error(error))
 }
 
 fetchEmployees()
