@@ -41,7 +41,7 @@ document.getElementById('employeeForm').addEventListener('submit', function(even
 // add event listener to delete button
 document.getElementById('dataTable').addEventListener('click', function(event) {
   if (event.target.textContent === 'Delete') {
-    deleteEmployee(id);
+    deleteEmployee(event);
   }
 });
 
@@ -64,9 +64,9 @@ function createEmployee (){
 }
 
 // TODO
-function deleteEmployee (id){
+function deleteEmployee (event){
   // get id
-  
+  const id = event.target.parentElement.parentElement.children[0].textContent;
   // send id to BE
   fetch(`http://localhost:3000/api/v1/employee/${id}`, {
     method: 'DELETE'
